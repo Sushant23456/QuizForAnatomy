@@ -22,3 +22,67 @@ button {
     margin: 10px 2.5%;
     cursor: pointer;
 }
+
+/* Purple Theme */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eee2f9;  /* Light purple background */
+    color: #4b2a83;  /* Dark purple text *
+}
+
+button {
+    background-color: #7c4dff;  /* Purple button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #6c40cf;  /* Darker purple on hover */
+}
+
+button:disabled {
+    background-color: #a09fb1;  /* Grayed out when disabled */
+    cursor: not-allowed;
+}
+
+/* Watermark */
+body::before {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;  /* Send it to the back */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10vw;  /* Responsive font size */
+    color: rgba(76, 42, 131, 0.1);  /* Transparent purple */
+    font-weight: bold;
+    pointer-events: none;  /* To ensure it doesn't interfere with click events */
+}
+
+.watermark {
+    position: fixed;
+    font-size: 3vw;  /* Adjust based on your preference */
+    color: rgba(76, 42, 131, 0.2);  /* Transparent purple */
+    pointer-events: none;
+    font-weight: bold;
+    white-space: nowrap;
+    opacity: 0;  /* Hidden initially until positioned by JS */
+    z-index: 1;
+}
+
+.quiz-container {
+    position: relative;
+    z-index: 10;  /* Ensures that it stays above the watermarks */
+    background-color: #eee2f9;  /* Light purple background to mask the watermarks */
+    padding: 20px;  /* Adjust as needed */
+    border-radius: 15px;  /* Gives the container rounded corners */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);  /* Adds a subtle shadow */
+}

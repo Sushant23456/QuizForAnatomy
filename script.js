@@ -127,3 +127,48 @@ function restartQuiz() {
 
 // Start the quiz
 displayQuestion(questions[currentQuestion]);
+
+const numWatermarks = 20;  // Adjust this number based on your preference
+for (let i = 0; i < numWatermarks; i++) {
+    const watermark = document.createElement('div');
+    watermark.className = 'watermark';
+    watermark.textContent = 'I love Prasamsa <3';
+    document.body.appendChild(watermark);
+
+    // Random initial position
+    positionWatermarkRandomly(watermark);
+
+    // Start movement animation
+    animateWatermark(watermark);
+}
+
+function positionWatermarkRandomly(watermark) {
+    const randomTop = Math.random() * (window.innerHeight - watermark.offsetHeight);
+    const randomLeft = Math.random() * (window.innerWidth - watermark.offsetWidth);
+    watermark.style.top = `${randomTop}px`;
+    watermark.style.left = `${randomLeft}px`;
+    watermark.style.opacity = 1;  // Make it visible
+}
+
+function animateWatermark(watermark) {
+    let directionX = Math.random() < 0.5 ? -1 : 1;
+    let directionY = Math.random() < 0.5 ? -1 : 1;
+    const speed = 1;  // Adjust speed if needed
+
+    function move() {
+        const x = parseFloat(watermark.style.left);
+        const y = parseFloat(watermark.style.top);
+
+        // Reverse direction upon hitting edge
+        if (x <= 0 || x >= window.innerWidth - watermark.offsetWidth) directionX = -directionX;
+        if (y <= 0 || y >= window.innerHeight - watermark.offsetHeight) directionY = -directionY;
+
+        // Move watermark
+        watermark.style.left = `${x + directionX * speed}px`;
+        watermark.style.top = `${y + directionY * speed}px`;
+
+        requestAnimationFrame(move);  // Call the next frame
+    }
+
+    move();  // Start the animation
+}
