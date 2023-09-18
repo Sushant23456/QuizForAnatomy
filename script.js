@@ -97,15 +97,23 @@ function displayQuestion(question) {
 function checkAnswer(button) {
     const chosenAnswer = button.textContent;
     const correctAnswer = questions[currentQuestion].answer;
-    
+
+    const choicesButtons = document.querySelectorAll("#choices button");
+
     if (chosenAnswer === correctAnswer) {
         button.style.backgroundColor = 'green';
-        score++;
     } else {
         button.style.backgroundColor = 'red';
+        // Find and highlight the correct answer
+        choicesButtons.forEach(btn => {
+            if (btn.textContent === correctAnswer) {
+                btn.style.backgroundColor = 'lime';  // or any other color to indicate the correct answer
+            }
+        });
     }
 
-    document.querySelectorAll("#choices button").forEach(btn => btn.disabled = true);  
+    // Disable all answer buttons after choosing
+    choicesButtons.forEach(btn => btn.disabled = true);  
 }
 
 function nextQuestion() {
