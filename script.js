@@ -1,4 +1,6 @@
 let currentQuestion = 0;
+let score = 0;
+
 
 let questions = [
     {
@@ -102,12 +104,13 @@ function checkAnswer(button) {
 
     if (chosenAnswer === correctAnswer) {
         button.style.backgroundColor = 'green';
+        score++;  // Increase the score
     } else {
         button.style.backgroundColor = 'red';
         // Find and highlight the correct answer
         choicesButtons.forEach(btn => {
             if (btn.textContent === correctAnswer) {
-                btn.style.backgroundColor = 'lime';  // or any other color to indicate the correct answer
+                btn.style.backgroundColor = 'lime';
             }
         });
     }
@@ -116,10 +119,13 @@ function checkAnswer(button) {
     choicesButtons.forEach(btn => btn.disabled = true);  
 }
 
+
 function nextQuestion() {
     currentQuestion++;
     if (currentQuestion < questions.length) {
         displayQuestion(questions[currentQuestion]);
+    } else if (score < 12) {
+        displayResultMessage();
     }
 }
 
@@ -132,9 +138,6 @@ function restartQuiz() {
     document.getElementById('nextBtn').style.display = 'block';
     displayQuestion(questions[currentQuestion]);
 }
-
-// Start the quiz
-displayQuestion(questions[currentQuestion]);
 
 const numWatermarks = 20;  // Adjust this number based on your preference
 for (let i = 0; i < numWatermarks; i++) {
@@ -180,3 +183,12 @@ function animateWatermark(watermark) {
 
     move();  // Start the animation
 }
+
+function displayResultMessage() {
+    const resultMessage = document.getElementById('resultMessage');
+    resultMessage.innerHTML = "Sushant loves you so much, and he is very proud of you! You are doing great!";
+    resultMessage.style.opacity = 1;  // Display the message with a fade-in effect
+}
+
+// Start the quiz
+displayQuestion(questions[currentQuestion]);
