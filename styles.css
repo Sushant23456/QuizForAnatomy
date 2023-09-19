@@ -41,6 +41,11 @@ button {
     transition: background-color 0.3s;
 }
 
+#nextBtn {
+    color: #7c4dff;  /* Purple text */
+    background-color: black;
+}
+
 button:hover {
     background-color: #6c40cf;  /* Darker purple on hover */
 }
