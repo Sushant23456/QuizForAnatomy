@@ -62,6 +62,31 @@ let questions = [
         image: 'images/Picture12.jpg',
         choices: ['Compact Bone', 'Spongy Bone', 'Blood and Lymph', 'Reticular CT'],
         answer: 'Blood and Lymph'
+    },  
+    {
+        image: 'images/Picture13.jpg',
+        choices: ['Squamous', 'Simple', 'Spongy Bone', 'Blood and Lymph'],
+        answer: 'Squamous'
+    },
+    {
+        image: 'images/Picture14.jpg',
+        choices: ['Squamous', 'Cuboidal', 'Columnar', 'Simple'],
+        answer: 'Cuboidal'
+    },
+    {
+        image: 'images/Picture15.jpg',
+        choices: ['Squamous', 'Cuboidal', 'Columnar', 'Simple'],
+        answer: 'Columnar'
+    },
+    {
+        image: 'images/Picture16.jpg',
+        choices: ['Simple', 'Stratified', 'Cuboidal', 'Columnar'],
+        answer: 'Simple'
+    },
+    {
+        image: 'images/Picture17.jpg',
+        choices: ['Simple', 'Stratified', 'Cuboidal', 'Columnar'],
+        answer: 'Stratified'
     }
 ];
 
@@ -87,7 +112,7 @@ function displayQuestion(question) {
         choicesElements[i].disabled = false;  
         choicesElements[i].style.backgroundColor = ''; 
     }
-
+    document.getElementById('currentQuestionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
     // Update to display score at the end and show restart button
     if (currentQuestion === questions.length - 1) {
         document.getElementById('nextBtn').style.display = 'none';
@@ -124,7 +149,7 @@ function nextQuestion() {
     currentQuestion++;
     if (currentQuestion < questions.length) {
         displayQuestion(questions[currentQuestion]);
-    } else if (score < 12) {
+    } else if (score < 17) {
         displayResultMessage();
     }
 }
@@ -138,6 +163,32 @@ function restartQuiz() {
     document.getElementById('nextBtn').style.display = 'block';
     displayQuestion(questions[currentQuestion]);
 }
+
+function getAllChoices(questions) {
+    let allChoices = [];
+    questions.forEach(question => {
+        allChoices = [...allChoices, ...question.choices];
+    });
+    return [...new Set(allChoices)]; // Return unique choices
+}
+
+function getRandomizedChoices(question, allChoices) {
+    let choices = [question.answer];
+    while (choices.length < 4) {
+        const randomChoice = allChoices[Math.floor(Math.random() * allChoices.length)];
+        if (!choices.includes(randomChoice)) {
+            choices.push(randomChoice);
+        }
+    }
+    return shuffle(choices);
+}
+
+let allUniqueChoices = getAllChoices(questions);
+for (let i = 12; i <= 16; i++) {
+    questions[i].choices = getRandomizedChoices(questions[i], allUniqueChoices);
+}
+
+
 
 const numWatermarks = 20;  // Adjust this number based on your preference
 for (let i = 0; i < numWatermarks; i++) {
