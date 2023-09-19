@@ -102,3 +102,92 @@ body::before {
     opacity: 0;  /* Start hidden */
     transition: opacity 2s;  /* Fade in effect */
 }
+
+/* Original Styles ... */
+
+/* Targeting iPhone 12 Mini */
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    .quiz-container {
+        margin: 10px auto;
+        padding: 15px;
+    }
+
+    #questionImage {
+        max-height: 250px;
+    }
+
+    #choices {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    body::before {
+        font-size: 8vw;
+    }
+
+    .watermark {
+        font-size: 2.5vw;
+    }
+}
+
+/* Targeting iPhone 12 & 12 Pro */
+@media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
+    .quiz-container {
+        margin: 15px auto;
+        padding: 20px;
+    }
+
+    #questionImage {
+        max-height: 300px;
+    }
+
+    #choices {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    body::before {
+        font-size: 8.5vw;
+    }
+
+    .watermark {
+        font-size: 2.7vw;
+    }
+}
+
+/* Targeting iPhone 12 Pro Max & 13 Pro Max */
+@media only screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) {
+    .quiz-container {
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    #questionImage {
+        max-height: 350px;
+    }
+
+    #choices {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    body::before {
+        font-size: 9vw;
+    }
+
+    .watermark {
+        font-size: 2.8vw;
+    }
+}
