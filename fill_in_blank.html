@@ -127,14 +127,14 @@
             }
 
             #answerChoicesList li {
-    padding: 10px;
-    transition: background-color 0.3s;
-    border-radius: 4px;
-}
+                padding: 10px;
+                transition: background-color 0.3s;
+                border-radius: 4px;
+            }
 
-#answerChoicesList li:hover {
-    background-color: #e2c9f5; 
-}
+            #answerChoicesList li:hover {
+                background-color: #e2c9f5;
+            }
         }
     </style>
 </head>
@@ -204,39 +204,39 @@
         }
 
         function checkFillAnswer() {
-    const userInput = document.getElementById('userAnswer').value.trim().toLowerCase();
-    const mappedAnswer = getAnswerByLetter(userInput);
-    const correctAnswer = fillQuestions[currentFillQuestion].answer;
-    const feedbackMessage = document.getElementById('feedbackMessage');
+            const userInput = document.getElementById('userAnswer').value.trim().toLowerCase();
+            const mappedAnswer = getAnswerByLetter(userInput);
+            const correctAnswer = fillQuestions[currentFillQuestion].answer;
+            const feedbackMessage = document.getElementById('feedbackMessage');
 
-    if (mappedAnswer === null) {
-        feedbackMessage.textContent = "Invalid answer choice!";
-        feedbackMessage.style.color = "red";
-        return;
-    }
+            if (mappedAnswer === null) {
+                feedbackMessage.textContent = "Invalid answer choice!";
+                feedbackMessage.style.color = "red";
+                return;
+            }
 
-    if (mappedAnswer === correctAnswer) {
-        fillScore++;
-        feedbackMessage.textContent = "Correct!";
-        feedbackMessage.style.color = "green";
-
-        if (currentFillQuestion < fillQuestions.length - 1) {
-            currentFillQuestion++;
-            displayFillQuestion(fillQuestions[currentFillQuestion]);
-        } else {
-            document.getElementById('fillScore').textContent = "Score: " + fillScore + "/" + fillQuestions.length;
-            document.getElementById('fillRestartBtn').style.display = 'block';
-
-            if (fillScore === 17) {
-                feedbackMessage.textContent = "Sushant is so proud of you. You are doing so good.";
+            if (mappedAnswer === correctAnswer) {
+                fillScore++;
+                feedbackMessage.textContent = "Correct!";
                 feedbackMessage.style.color = "green";
+
+                if (currentFillQuestion < fillQuestions.length - 1) {
+                    currentFillQuestion++;
+                    displayFillQuestion(fillQuestions[currentFillQuestion]);
+                } else {
+                    document.getElementById('fillScore').textContent = "Score: " + fillScore + "/" + fillQuestions.length;
+                    document.getElementById('fillRestartBtn').style.display = 'block';
+
+                    if (fillScore === 17) {
+                        feedbackMessage.textContent = "Sushant is so proud of you. You are doing so good.";
+                        feedbackMessage.style.color = "green";
+                    }
+                }
+            } else {
+                feedbackMessage.textContent = "Try again!";
+                feedbackMessage.style.color = "red";
             }
         }
-    } else {
-        feedbackMessage.textContent = "Try again!";
-        feedbackMessage.style.color = "red";
-    }
-}
 
 
         function restartFillQuiz() {
@@ -250,13 +250,13 @@
         let allAnswers = [...new Set(fillQuestions.map(q => q.answer))].sort();
         let answerChoicesList = document.getElementById('answerChoicesList');
         allAnswers.forEach((answer, index) => {
-    let listItem = document.createElement('li');
-    let letter = String.fromCharCode(65 + index);
-    listItem.textContent = `${letter}. ${answer}`;
-    listItem.addEventListener('click', () => selectAnswerFromList(letter)); 
-    listItem.addEventListener('touchstart', () => selectAnswerFromList(letter)); 
-    answerChoicesList.appendChild(listItem);
-});
+            let listItem = document.createElement('li');
+            let letter = String.fromCharCode(65 + index);
+            listItem.textContent = `${letter}. ${answer}`;
+            listItem.addEventListener('click', () => selectAnswerFromList(letter));
+            listItem.addEventListener('touchstart', () => selectAnswerFromList(letter));
+            answerChoicesList.appendChild(listItem);
+        });
 
         displayFillQuestion(fillQuestions[currentFillQuestion]);
         function displayFillQuestion(question) {
@@ -271,9 +271,11 @@
         function selectAnswerFromList(letter) {
     const userInput = document.getElementById('userAnswer');
     userInput.value = letter;
+    checkFillAnswer(); // automatically check the answer
 }
 
-        
+
+
 
     </script>
 
