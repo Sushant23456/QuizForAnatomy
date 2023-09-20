@@ -41,41 +41,29 @@
         .content {
             display: flex;
             flex-direction: row;
-            /* Change from default (column) to row */
             justify-content: center;
             align-items: flex-start;
-            /* Align items to the top */
             width: 80%;
-            /* Adjust width as per your design preference */
             max-width: 1200px;
-            /* Adjust max-width as per your design preference */
             margin: 0 auto;
-            /* Center the .content horizontally */
         }
 
         .quiz-wrapper {
             display: flex;
-            /* This will create a flex container */
             justify-content: center;
-            /* Center the items horizontally */
             align-items: start;
-            /* Start the items from the top */
             width: 90%;
-            /* Adjust as per design preference */
             margin: 0 auto;
-            /* To center the wrapper */
         }
 
         .fill-quiz-container {
             margin-right: 40px;
-            /* Additional margin to space out the elements */
             padding: 20px;
             border: 1px solid #b19cd9;
             background-color: #e9d8fd;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(102, 51, 153, 0.1);
             flex-grow: 1;
-            /* Allows it to take up the remaining space */
         }
 
         #answerChoicesList {
@@ -208,7 +196,7 @@
         }
 
         function getAnswerByLetter(letter) {
-            let index = letter.toLowerCase().charCodeAt(0) - 97; // Convert letter to its position in the alphabet (0 for a/A, 1 for b/B, etc.)
+            let index = letter.toLowerCase().charCodeAt(0) - 97;
             if (index >= 0 && index < allAnswers.length) {
                 return allAnswers[index];
             }
@@ -216,39 +204,40 @@
         }
 
         function checkFillAnswer() {
-            const userInput = document.getElementById('userAnswer').value.trim().toLowerCase();
-            const mappedAnswer = getAnswerByLetter(userInput);
-            const correctAnswer = fillQuestions[currentFillQuestion].answer;
-            const feedbackMessage = document.getElementById('feedbackMessage');
+    const userInput = document.getElementById('userAnswer').value.trim().toLowerCase();
+    const mappedAnswer = getAnswerByLetter(userInput);
+    const correctAnswer = fillQuestions[currentFillQuestion].answer;
+    const feedbackMessage = document.getElementById('feedbackMessage');
 
-            if (mappedAnswer === null) {
-                feedbackMessage.textContent = "Invalid answer choice!";
-                feedbackMessage.style.color = "red";
-                return;
-            }
+    if (mappedAnswer === null) {
+        feedbackMessage.textContent = "Invalid answer choice!";
+        feedbackMessage.style.color = "red";
+        return;
+    }
 
-            if (mappedAnswer === correctAnswer) {
-                fillScore++;
-                feedbackMessage.textContent = "Correct!";
+    if (mappedAnswer === correctAnswer) {
+        fillScore++;
+        feedbackMessage.textContent = "Correct!";
+        feedbackMessage.style.color = "green";
+
+        if (currentFillQuestion < fillQuestions.length - 1) {
+            currentFillQuestion++;
+            displayFillQuestion(fillQuestions[currentFillQuestion]);
+        } else {
+            document.getElementById('fillScore').textContent = "Score: " + fillScore + "/" + fillQuestions.length;
+            document.getElementById('fillRestartBtn').style.display = 'block';
+
+            if (fillScore === 17) {
+                feedbackMessage.textContent = "Sushant is so proud of you. You are doing so good.";
                 feedbackMessage.style.color = "green";
-
-                if (currentFillQuestion < fillQuestions.length - 1) {
-                    currentFillQuestion++;
-                    displayFillQuestion(fillQuestions[currentFillQuestion]);
-                } else {
-                    document.getElementById('fillScore').textContent = "Score: " + fillScore + "/" + fillQuestions.length;
-                    document.getElementById('fillRestartBtn').style.display = 'block';
-
-                    if (fillScore === 17) {
-                        feedbackMessage.textContent = "Sushant is so proud of you. You are doing so good.";
-                        feedbackMessage.style.color = "green";
-                    }
-                }
-            } else {
-                feedbackMessage.textContent = "Try again!";
-                feedbackMessage.style.color = "red";
             }
         }
+    } else {
+        feedbackMessage.textContent = "Try again!";
+        feedbackMessage.style.color = "red";
+    }
+}
+
 
         function restartFillQuiz() {
             currentFillQuestion = 0;
@@ -264,8 +253,8 @@
     let listItem = document.createElement('li');
     let letter = String.fromCharCode(65 + index);
     listItem.textContent = `${letter}. ${answer}`;
-    listItem.addEventListener('click', () => selectAnswerFromList(letter));
-    listItem.style.cursor = 'pointer';  // Change cursor to indicate tappable area
+    listItem.addEventListener('click', () => selectAnswerFromList(letter)); 
+    listItem.addEventListener('touchstart', () => selectAnswerFromList(letter)); 
     answerChoicesList.appendChild(listItem);
 });
 
@@ -276,7 +265,6 @@
 
             document.getElementById('fillCurrentQuestionNumber').textContent = `Question ${currentFillQuestion + 1} of ${fillQuestions.length}`;
 
-            // Clear the textbox for the next question
             document.getElementById('userAnswer').value = '';
         }
 
