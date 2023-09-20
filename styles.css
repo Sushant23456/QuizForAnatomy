@@ -23,15 +23,15 @@ button {
     cursor: pointer;
 }
 
-/* Purple Theme */
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #eee2f9;  /* Light purple background */
-    color: #4b2a83;  /* Dark purple text */
+    background-color: #eee2f9;  
+    color: #4b2a83; 
 }
 
 button {
-    background-color: #7c4dff;  /* Purple button */
+    background-color: #7c4dff; 
     color: white;
     border: none;
     padding: 10px 20px;
@@ -42,54 +42,53 @@ button {
 }
 
 #nextBtn {
-    color: #7c4dff;  /* Purple text */
+    color: #7c4dff; 
     background-color: black;
 }
 
 button:hover {
-    background-color: #6c40cf;  /* Darker purple on hover */
+    background-color: #6c40cf; 
 }
 
 button:disabled {
-    background-color: #a09fb1;  /* Grayed out when disabled */
+    background-color: #a09fb1;
     cursor: not-allowed;
 }
 
-/* Watermark */
 body::before {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: -1;  /* Send it to the back */
+    z-index: -1; 
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10vw;  /* Responsive font size */
-    color: rgba(76, 42, 131, 0.1);  /* Transparent purple */
+    font-size: 10vw; 
+    color: rgba(76, 42, 131, 0.1);  
     font-weight: bold;
-    pointer-events: none;  /* To ensure it doesn't interfere with click events */
+    pointer-events: none;  
 }
 
 .watermark {
     position: fixed;
-    font-size: 3vw;  /* Adjust based on your preference */
-    color: rgba(76, 42, 131, 0.2);  /* Transparent purple */
+    font-size: 3vw; 
+    color: rgba(76, 42, 131, 0.2); 
     pointer-events: none;
     font-weight: bold;
     white-space: nowrap;
-    opacity: 0;  /* Hidden initially until positioned by JS */
+    opacity: 0; 
     z-index: 1;
 }
 
 .quiz-container {
     position: relative;
-    z-index: 10;  /* Ensures that it stays above the watermarks */
-    background-color: #eee2f9;  /* Light purple background to mask the watermarks */
-    padding: 20px;  /* Adjust as needed */
-    border-radius: 15px;  /* Gives the container rounded corners */
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);  /* Adds a subtle shadow */
+    z-index: 10; 
+    background-color: #eee2f9; 
+    padding: 20px; 
+    border-radius: 15px; 
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 }
 nav {
     padding: 10px 0;
@@ -116,17 +115,14 @@ nav a:hover {
     transform: translate(-50%, -50%);
     font-size: 1.5rem;
     text-align: center;
-    background-color: rgba(76, 42, 131, 0.8);  /* Transparent purple */
+    background-color: rgba(76, 42, 131, 0.8); 
     color: white;
     padding: 20px;
     border-radius: 15px;
-    opacity: 0;  /* Start hidden */
-    transition: opacity 2s;  /* Fade in effect */
+    opacity: 0;  
+    transition: opacity 2s;
 }
 
-/* Original Styles ... */
-
-/* Targeting iPhone 12 Mini */
 @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
     .quiz-container {
         margin: 10px auto;

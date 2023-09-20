@@ -240,18 +240,24 @@
             displayFillQuestion(fillQuestions[currentFillQuestion]);
         }
 
-
-        // Populate answer choices on the side
         let allAnswers = [...new Set(fillQuestions.map(q => q.answer))].sort();
         let answerChoicesList = document.getElementById('answerChoicesList');
         allAnswers.forEach((answer, index) => {
             let listItem = document.createElement('li');
-            listItem.textContent = `${String.fromCharCode(65 + index)}. ${answer}`;  // 65 is ASCII for 'A'
+            listItem.textContent = `${String.fromCharCode(65 + index)}. ${answer}`; 
             answerChoicesList.appendChild(listItem);
         });
 
-        // Start the fill-in-the-blank quiz
         displayFillQuestion(fillQuestions[currentFillQuestion]);
+        function displayFillQuestion(question) {
+    const imgElement = document.getElementById('fillQuestionImage');
+    imgElement.src = question.image;
+
+    document.getElementById('fillCurrentQuestionNumber').textContent = `Question ${currentFillQuestion + 1} of ${fillQuestions.length}`;
+
+    // Clear the textbox for the next question
+    document.getElementById('userAnswer').value = '';
+}
 
     </script>
 

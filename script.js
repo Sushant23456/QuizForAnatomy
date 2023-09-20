@@ -225,25 +225,23 @@ function positionWatermarkRandomly(watermark) {
 function animateWatermark(watermark) {
     let directionX = Math.random() < 0.5 ? -1 : 1;
     let directionY = Math.random() < 0.5 ? -1 : 1;
-    const speed = 1;  // Adjust speed if needed
+    const speed = 1;  
 
     function move() {
         const x = parseFloat(watermark.style.left);
         const y = parseFloat(watermark.style.top);
 
-        // Reverse direction upon hitting edge
         if (x <= 0 || x >= window.innerWidth - watermark.offsetWidth) directionX = -directionX;
         if (y <= 0 || y >= window.innerHeight - watermark.offsetHeight) directionY = -directionY;
 
-        // Move watermark
+
         watermark.style.left = `${x + directionX * speed}px`;
         watermark.style.top = `${y + directionY * speed}px`;
 
-        requestAnimationFrame(move);  // Call the next frame
+        requestAnimationFrame(move);  
     }
 
-    move();  // Start the animation
+    move(); 
 }
 
-// Start the quiz
 displayQuestion(questions[currentQuestion]);
