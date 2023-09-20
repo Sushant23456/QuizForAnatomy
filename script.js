@@ -113,6 +113,7 @@ function displayQuestion(question) {
         choicesElements[i].style.backgroundColor = ''; 
     }
     document.getElementById('currentQuestionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+
     // Update to display score at the end and show restart button
     if (currentQuestion === questions.length - 1) {
         document.getElementById('nextBtn').style.display = 'none';
@@ -142,17 +143,26 @@ function checkAnswer(button) {
 
     // Disable all answer buttons after choosing
     choicesButtons.forEach(btn => btn.disabled = true);  
+    
+    // If it's the last question, display the next button one more time
+    if (currentQuestion === questions.length - 1) {
+        document.getElementById('nextBtn').textContent = "Finish";
+    }
 }
 
 
 function nextQuestion() {
-    currentQuestion++;
-    if (currentQuestion < questions.length) {
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
         displayQuestion(questions[currentQuestion]);
-    } else if (score < 17) {
+    } else if (currentQuestion === questions.length - 1) {
+        document.getElementById('nextBtn').style.display = 'none';
+        document.getElementById('score').textContent = "Score: " + score + "/" + questions.length;
+        document.getElementById('restartBtn').style.display = 'block';
         displayResultMessage();
     }
 }
+
 
 function restartQuiz() {
     currentQuestion = 0;
@@ -233,12 +243,6 @@ function animateWatermark(watermark) {
     }
 
     move();  // Start the animation
-}
-
-function displayResultMessage() {
-    const resultMessage = document.getElementById('resultMessage');
-    resultMessage.innerHTML = "Sushant loves you so much, and he is very proud of you! You are doing great!";
-    resultMessage.style.opacity = 1;  // Display the message with a fade-in effect
 }
 
 // Start the quiz

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fill-in-the-Blank Quiz</title>
+    <nav>
+        <a href="index.html">MCQ Quiz</a>
+        <a href="fill_in_blank.html">Fill in the Blank</a>
+    </nav>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f3ebff;
+            color: #663399;
+        }
+
+        nav {
+            padding: 10px 0;
+            background-color: #5a3d75;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #4a2d65;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: row;
+            /* Change from default (column) to row */
+            justify-content: center;
+            align-items: flex-start;
+            /* Align items to the top */
+            width: 80%;
+            /* Adjust width as per your design preference */
+            max-width: 1200px;
+            /* Adjust max-width as per your design preference */
+            margin: 0 auto;
+            /* Center the .content horizontally */
+        }
+
+        .quiz-wrapper {
+    display: flex; /* This will create a flex container */
+    justify-content: center; /* Center the items horizontally */
+    align-items: start; /* Start the items from the top */
+    width: 90%; /* Adjust as per design preference */
+    margin: 0 auto; /* To center the wrapper */
+}
+
+        .fill-quiz-container {
+            margin-right: 40px;
+            /* Additional margin to space out the elements */
+            padding: 20px;
+            border: 1px solid #b19cd9;
+            background-color: #e9d8fd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(102, 51, 153, 0.1);
+            flex-grow: 1;
+            /* Allows it to take up the remaining space */
+        }
+
+        #answerChoicesList {
+            max-width: 300px;
+            list-style-type: none;
+            padding-left: 0;
+            margin: 20px;
+        }
+
+        button {
+            background-color: #884dff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #6b38d4;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #b19cd9;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quiz-wrapper">
+    <div class="fill-quiz-container">
+        <img id="fillQuestionImage" src="" alt="Question Image">
+        <p id="fillCurrentQuestionNumber"></p>
+        <p>Type the letter corresponding to the correct answer:</p>
+        <input type="text" id="userAnswer" maxlength="1" placeholder="Enter letter A-Q">
+        <button onclick="checkFillAnswer()">Submit Answer</button>
+        <p id="feedbackMessage"></p>
+        <p id="fillScore"></p>
+        <button id="fillRestartBtn" onclick="restartFillQuiz()" style="display: none;">Restart Quiz</button>
+    </div>
+    <ul id="answerChoicesList"></ul>
+    </div>
+
+    <script>
+        let fillQuestions = [
+            { image: 'images/Picture1.jpg', answer: 'Areolar or Loose CT' },
+            { image: 'images/Picture2.jpg', answer: 'Adipose Tissue' },
+            { image: 'images/Picture3.jpg', answer: 'Reticular CT' },
+            { image: 'images/Picture4.jpg', answer: 'Dense Regular CT' },
+            { image: 'images/Picture5.jpg', answer: 'Dense Irregular CT' },
+            { image: 'images/Picture6.jpg', answer: 'Dense Elastic CT' },
+            { image: 'images/Picture7.jpg', answer: 'Hyaline Cartilage' },
+            { image: 'images/Picture8.jpg', answer: 'Elastic Cartilage' },
+            { image: 'images/Picture9.jpg', answer: 'Fibrocartilage' },
+            { image: 'images/Picture10.jpg', answer: 'Compact Bone' },
+            { image: 'images/Picture11.jpg', answer: 'Spongy Bone' },
+            { image: 'images/Picture12.jpg', answer: 'Blood and Lymph' },
+            { image: 'images/Picture13.jpg', answer: 'Squamous' },
+            { image: 'images/Picture14.jpg', answer: 'Cuboidal' },
+            { image: 'images/Picture15.jpg', answer: 'Columnar' },
+            { image: 'images/Picture16.jpg', answer: 'Simple' },
+            { image: 'images/Picture17.jpg', answer: 'Stratified' },
+        ];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        shuffleArray(fillQuestions);
+
+        let currentFillQuestion = 0;
+        let fillScore = 0;
+
+        function displayFillQuestion(question) {
+            const imgElement = document.getElementById('fillQuestionImage');
+            imgElement.src = question.image;
+
+            document.getElementById('fillCurrentQuestionNumber').textContent = `Question ${currentFillQuestion + 1} of ${fillQuestions.length}`;
+        }
+
+        function getAnswerByLetter(letter) {
+            let index = letter.toLowerCase().charCodeAt(0) - 97; // Convert letter to its position in the alphabet (0 for a/A, 1 for b/B, etc.)
+            if (index >= 0 && index < allAnswers.length) {
+                return allAnswers[index];
+            }
+            return null;
+        }
+
+        function checkFillAnswer() {
+            const userInput = document.getElementById('userAnswer').value.trim().toLowerCase();
+            const mappedAnswer = getAnswerByLetter(userInput);
+            const correctAnswer = fillQuestions[currentFillQuestion].answer;
+            const feedbackMessage = document.getElementById('feedbackMessage');
+
+            if (mappedAnswer === null) {
+                feedbackMessage.textContent = "Invalid answer choice!";
+                feedbackMessage.style.color = "red";
+                return;
+            }
+
+            if (mappedAnswer === correctAnswer) {
+                fillScore++;
+                feedbackMessage.textContent = "Correct!";
+                feedbackMessage.style.color = "green";
+
+                if (currentFillQuestion < fillQuestions.length - 1) {
+                    currentFillQuestion++;
+                    displayFillQuestion(fillQuestions[currentFillQuestion]);
+                } else {
+                    document.getElementById('fillScore').textContent = "Score: " + fillScore + "/" + fillQuestions.length;
+                    document.getElementById('fillRestartBtn').style.display = 'block';
+                }
+            } else {
+                feedbackMessage.textContent = "Try again!";
+                feedbackMessage.style.color = "red";
+            }
+        }
+
+
+
+        function restartFillQuiz() {
+            currentFillQuestion = 0;
+            fillScore = 0;
+            document.getElementById('fillScore').textContent = '';
+            document.getElementById('fillRestartBtn').style.display = 'none';
+            displayFillQuestion(fillQuestions[currentFillQuestion]);
+        }
+
+
+        // Populate answer choices on the side
+        let allAnswers = [...new Set(fillQuestions.map(q => q.answer))].sort();
+        let answerChoicesList = document.getElementById('answerChoicesList');
+        allAnswers.forEach((answer, index) => {
+            let listItem = document.createElement('li');
+            listItem.textContent = `${String.fromCharCode(65 + index)}. ${answer}`;  // 65 is ASCII for 'A'
+            answerChoicesList.appendChild(listItem);
+        });
+
+        // Start the fill-in-the-blank quiz
+        displayFillQuestion(fillQuestions[currentFillQuestion]);
+
+    </script>
+
+</body>
+
+</html>

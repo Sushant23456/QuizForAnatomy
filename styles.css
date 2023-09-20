@@ -91,7 +91,23 @@ body::before {
     border-radius: 15px;  /* Gives the container rounded corners */
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);  /* Adds a subtle shadow */
 }
+nav {
+    padding: 10px 0;
+    background-color: #5a3d75;
+}
 
+nav a {
+    margin: 0 15px;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #4a2d65;
+}
 
 #resultMessage {
     position: fixed;
