@@ -54,12 +54,17 @@
         }
 
         .quiz-wrapper {
-    display: flex; /* This will create a flex container */
-    justify-content: center; /* Center the items horizontally */
-    align-items: start; /* Start the items from the top */
-    width: 90%; /* Adjust as per design preference */
-    margin: 0 auto; /* To center the wrapper */
-}
+            display: flex;
+            /* This will create a flex container */
+            justify-content: center;
+            /* Center the items horizontally */
+            align-items: start;
+            /* Start the items from the top */
+            width: 90%;
+            /* Adjust as per design preference */
+            margin: 0 auto;
+            /* To center the wrapper */
+        }
 
         .fill-quiz-container {
             margin-right: 40px;
@@ -102,53 +107,63 @@
             width: 100%;
         }
 
-@media screen and (max-width: 428px) {
-    
-    body {
-        padding: 10px;
-    }
+        @media screen and (max-width: 428px) {
 
-    nav {
-        padding: 8px 0;
-    }
+            body {
+                padding: 10px;
+            }
 
-    nav a {
-        margin: 0 10px;
-        padding: 5px 8px;
-    }
+            nav {
+                padding: 8px 0;
+            }
 
-    .content, .quiz-wrapper {
-        width: 100%;
-        flex-direction: column;
-    }
+            nav a {
+                margin: 0 10px;
+                padding: 5px 8px;
+            }
 
-    .fill-quiz-container {
-        margin-right: 0;
-        margin-bottom: 20px; 
-    }
+            .content,
+            .quiz-wrapper {
+                width: 100%;
+                flex-direction: column;
+            }
 
-    #answerChoicesList {
-        margin: 10px 0;
-        text-align: center;
-    }
+            .fill-quiz-container {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            #answerChoicesList {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            #answerChoicesList li {
+    padding: 10px;
+    transition: background-color 0.3s;
+    border-radius: 4px;
 }
 
+#answerChoicesList li:hover {
+    background-color: #e2c9f5; 
+}
+        }
     </style>
 </head>
 
 <body>
     <div class="quiz-wrapper">
-    <div class="fill-quiz-container">
-        <img id="fillQuestionImage" src="" alt="Question Image">
-        <p id="fillCurrentQuestionNumber"></p>
-        <p>Type the letter corresponding to the correct answer:</p>
-        <input type="text" id="userAnswer" maxlength="1" placeholder="Enter letter A-Q">
-        <button onclick="checkFillAnswer()">Submit Answer</button>
-        <p id="feedbackMessage"></p>
-        <p id="fillScore"></p>
-        <button id="fillRestartBtn" onclick="restartFillQuiz()" style="display: none;">Restart Quiz</button>
-    </div>
-    <ul id="answerChoicesList"></ul>
+        <div class="fill-quiz-container">
+            <img id="fillQuestionImage" src="" alt="Question Image">
+            <p id="fillCurrentQuestionNumber"></p>
+            <p>Type the letter corresponding to the correct answer:</p>
+            <input type="text" id="userAnswer" maxlength="1" placeholder="Enter letter A-Q">
+            <button onclick="checkFillAnswer()">Submit Answer</button>
+            <p id="feedbackMessage"></p>
+            <p id="fillScore"></p>
+            <button id="fillRestartBtn" onclick="restartFillQuiz()" style="display: none;">Restart Quiz</button>
+        </div>
+        <ul id="answerChoicesList"></ul>
     </div>
 
     <script>
@@ -223,14 +238,17 @@
                 } else {
                     document.getElementById('fillScore').textContent = "Score: " + fillScore + "/" + fillQuestions.length;
                     document.getElementById('fillRestartBtn').style.display = 'block';
+
+                    if (fillScore === 17) {
+                        feedbackMessage.textContent = "Sushant is so proud of you. You are doing so good.";
+                        feedbackMessage.style.color = "green";
+                    }
                 }
             } else {
                 feedbackMessage.textContent = "Try again!";
                 feedbackMessage.style.color = "red";
             }
         }
-
-
 
         function restartFillQuiz() {
             currentFillQuestion = 0;
@@ -243,21 +261,31 @@
         let allAnswers = [...new Set(fillQuestions.map(q => q.answer))].sort();
         let answerChoicesList = document.getElementById('answerChoicesList');
         allAnswers.forEach((answer, index) => {
-            let listItem = document.createElement('li');
-            listItem.textContent = `${String.fromCharCode(65 + index)}. ${answer}`; 
-            answerChoicesList.appendChild(listItem);
-        });
+    let listItem = document.createElement('li');
+    let letter = String.fromCharCode(65 + index);
+    listItem.textContent = `${letter}. ${answer}`;
+    listItem.addEventListener('click', () => selectAnswerFromList(letter));
+    listItem.style.cursor = 'pointer';  // Change cursor to indicate tappable area
+    answerChoicesList.appendChild(listItem);
+});
 
         displayFillQuestion(fillQuestions[currentFillQuestion]);
         function displayFillQuestion(question) {
-    const imgElement = document.getElementById('fillQuestionImage');
-    imgElement.src = question.image;
+            const imgElement = document.getElementById('fillQuestionImage');
+            imgElement.src = question.image;
 
-    document.getElementById('fillCurrentQuestionNumber').textContent = `Question ${currentFillQuestion + 1} of ${fillQuestions.length}`;
+            document.getElementById('fillCurrentQuestionNumber').textContent = `Question ${currentFillQuestion + 1} of ${fillQuestions.length}`;
 
-    // Clear the textbox for the next question
-    document.getElementById('userAnswer').value = '';
+            // Clear the textbox for the next question
+            document.getElementById('userAnswer').value = '';
+        }
+
+        function selectAnswerFromList(letter) {
+    const userInput = document.getElementById('userAnswer');
+    userInput.value = letter;
 }
+
+        
 
     </script>
 
